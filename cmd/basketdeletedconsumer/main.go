@@ -26,10 +26,11 @@ func main() {
 
 	redisClient := repository.NewRedisClient(context.TODO(), config)
 	onConsumed := func(message rabbitmq.Message) error {
+
 		defer measurement.TimeTrack(time.Now(), "[Basket Deleted Consumer]", "Consumed")
 		ctx := context.Background()
 
-		orderStartedEvent, err := ParseOrderStarted(message.Payload)
+		orderStartedEvent, err := parseOrderStarted(message.Payload)
 		if err != nil {
 			logger.Error(err.Error())
 			return err
@@ -42,6 +43,7 @@ func main() {
 		}
 
 		return nil
+
 	}
 
 	r, c := consumer.AddConsumer(consumer.Request{
@@ -60,7 +62,7 @@ func main() {
 	_ = r.RunConsumers()
 }
 
-func ParseOrderStarted(payload []byte) (*events.OrderStartedIntegrationEvent, error) {
+func parseOrderStarted(payload []byte) (*events.OrderStartedIntegrationEvent, error) {
 	var orderStarted events.OrderStartedIntegrationEvent
 	err := json.Unmarshal(payload, &orderStarted)
 	if err != nil {
