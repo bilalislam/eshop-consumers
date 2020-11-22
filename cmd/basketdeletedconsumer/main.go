@@ -1,11 +1,13 @@
 package main
 
 import (
-	"github.com/bilalislam/eshop-consumers"
+	"github.com/bilalislam/eshop-consumers/pkg/handler"
+	"github.com/bilalislam/eshop-consumers/pkg/utils"
 	"github.com/bilalislam/torc/consumer"
 	"github.com/bilalislam/torc/log"
 	"github.com/bilalislam/torc/rabbitmq"
 	"strings"
+	"time"
 )
 
 func main() {
@@ -16,11 +18,11 @@ func main() {
 		ConfigClient: configClient,
 	}
 	config, _ := h.NewConfigHandler()
-	_, eventsUseCase := handler.NewEventUseCase(config)
-	_, projectionUseCase := handler.NewProjectionUseCase(config)
 	measurement := utils.NewTimeMeasurement(logger)
 
 	onConsumed := func(message rabbitmq.Message) error {
+		defer measurement.TimeTrack(time.Now(), "[Basket Deleted Consumer]", "Consumed")
+
 		return nil
 	}
 
