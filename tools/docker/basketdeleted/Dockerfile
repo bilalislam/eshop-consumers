@@ -5,9 +5,8 @@ FROM golang:latest as builder
 
 RUN mkdir -p /go/src/github.com/bilalislam/eshop-consumers
 WORKDIR /go/src/github.com/bilalislam/eshop-consumers
-RUN ls -la
 
-RUN git config --global url."https://bilalislam:Superman6!123@github.com".insteadOf "https://github.com"
+RUN git config --global url."https://bilalislam:8eb7b428610bc9be60d1ba6ee3fe95a4b4dc1fe9@github.com".insteadOf "https://github.com"
 
 # Force the go compiler to use modules
 ENV GO111MODULE on

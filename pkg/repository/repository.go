@@ -62,7 +62,7 @@ func NewRedisClient(ctx context.Context, v *viper.Viper) storage.IRepository {
 			Addr:     addr,
 			Password: password,
 			DB:       db,
-		})
+		})	
 	}
 	if err != nil {
 		panic(err.Error())
