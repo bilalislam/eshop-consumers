@@ -7,12 +7,14 @@ RUN mkdir -p /go/src/github.com/bilalislam/eshop-consumers
 WORKDIR /go/src/github.com/bilalislam/eshop-consumers
 RUN ls -la
 
+RUN git config --global url."https://bilalislam:Superman6!123@github.com".insteadOf "https://github.com"
+
 # Force the go compiler to use modules
 ENV GO111MODULE on
 
 # <- COPY go.mod and go.sum files to the workspace
-COPY ../../go.mod .
-COPY ../../go.sum .
+COPY go.mod .
+COPY go.sum .
 
 # Get dependancies - will also be cached if we won't change mod/sum
 RUN go mod download
